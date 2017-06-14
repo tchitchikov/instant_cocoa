@@ -41,19 +41,14 @@ func main() {
 	gfData := googleData.Data()
 	sortedGFKeys := googleData.SortedKeys(gfData)
 
-	// chocolateCloses := []float64{}
-	chocolateCloses := []get_cocoa.PlotStruct{}
-
+	chocPlot := plotter.XYs{}
 	for key, value := range sortedGFKeys {
-		chocolateCloses = append(chocolateCloses, get_cocoa.PlotStruct{
+		chocPlot = append(chocPlot, get_cocoa.PlotStruct{
 			X: float64(key),
 			Y: gfData[value]["Close"],
 		})
 	}
-	chocPlot := plotter.XYs{}
-	for _, val := range chocolateCloses {
-		chocPlot = append(chocPlot, val)
-	}
+
 	fmt.Println(chocPlot)
 	get_cocoa.Plot(chocPlot)
 
