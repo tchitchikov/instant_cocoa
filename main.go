@@ -8,6 +8,7 @@ import (
 	sql "database/sql"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gonum/plot/plotter"
 )
 
 func main() {
@@ -39,7 +40,22 @@ func main() {
 	// fmt.Println(googleData.RawData())
 	gfData := googleData.Data()
 	sortedGFKeys := googleData.SortedKeys(gfData)
-	fmt.Println(sortedGFKeys)
+
+	// chocolateCloses := []float64{}
+	chocolateCloses := []get_cocoa.PlotStruct{}
+
+	for key, value := range sortedGFKeys {
+		chocolateCloses = append(chocolateCloses, get_cocoa.PlotStruct{
+			X: float64(key),
+			Y: gfData[value]["Close"],
+		})
+	}
+	chocPlot := plotter.XYs{}
+	for _, val := range chocolateCloses {
+		chocPlot = append(chocPlot, val)
+	}
+	fmt.Println(chocPlot)
+	get_cocoa.Plot(chocPlot)
 
 }
 
