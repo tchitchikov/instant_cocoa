@@ -8,7 +8,6 @@ import (
 	sql "database/sql"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/gonum/plot/plotter"
 )
 
 func main() {
@@ -38,20 +37,26 @@ func main() {
 		EndDate:   "2016-06-13",
 	}
 	// fmt.Println(googleData.RawData())
-	gfData := googleData.Data()
-	sortedGFKeys := googleData.SortedKeys(gfData)
+	// gfData := googleData.Data()
+	// sortedGFKeys := googleData.SortedKeys(gfData)
 
-	chocPlot := plotter.XYs{}
-	for key, value := range sortedGFKeys {
-		chocPlot = append(chocPlot, get_cocoa.PlotStruct{
-			X: float64(key),
-			Y: gfData[value]["Close"],
-		})
-	}
+	// chocPlot := plotter.XYs{}
+	// for key, value := range sortedGFKeys {
+	// 	chocPlot = append(chocPlot, get_cocoa.PlotStruct{
+	// 		X: float64(key),
+	// 		Y: gfData[value]["Close"],
+	// 	})
+	// }
 
-	fmt.Println(chocPlot)
-	get_cocoa.Plot(chocPlot)
+	// fmt.Println(chocPlot)
+	// get_cocoa.Plot(chocPlot)
+	result(googleData)
 
+}
+
+func result(f get_cocoa.FinancialData) {
+	fmt.Println(f)
+	fmt.Println(f.RawData())
 }
 
 // getAPIKey makes a call to a mysql database I have locally to get my APIKey
