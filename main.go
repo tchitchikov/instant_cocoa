@@ -31,6 +31,16 @@ func main() {
 	sortedKeys := quandlData.SortedKeys(data)
 	fmt.Println(sortedKeys)
 
+	googleData := get_cocoa.GoogleFinance{
+		Ticker:    "CHOC",
+		StartDate: "2016-01-01",
+		EndDate:   "2016-06-13",
+	}
+	// fmt.Println(googleData.RawData())
+	gfData := googleData.Data()
+	sortedGFKeys := googleData.SortedKeys(gfData)
+	fmt.Println(sortedGFKeys)
+
 }
 
 // getAPIKey makes a call to a mysql database I have locally to get my APIKey
