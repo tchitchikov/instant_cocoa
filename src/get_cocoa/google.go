@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 )
 
 type GoogleFinance struct {
@@ -64,32 +63,5 @@ func (gf GoogleFinance) Data() map[string]map[string]float64 {
 		}
 		orderID = orderID + 1.0
 	}
-	return output
-}
-
-// SortedKeys implements QuickSort to order the map keys (strings that match time.Time parsing) into a list for time series work
-func (gf GoogleFinance) SortedKeys(data map[string]map[string]float64) []string {
-	layout := "2-Jan-06"
-	dateList := []time.Time{}
-	for key := range data {
-		newVal, _ := time.Parse(layout, key)
-		dateList = append(dateList, newVal)
-	}
-
-	firstHalf := []time.Time{}
-	secondHalf := []time.Time{}
-	initialVal := dateList[0]
-	for _, val := range dateList {
-		if val.Before(initialVal) {
-			firstHalf = append(firstHalf, val)
-		} else {
-			secondHalf = append(secondHalf, val)
-		}
-	}
-	output := []string{}
-	quickSortFirstHalf := dateListSort(firstHalf)
-	quickSortSecondHalf := dateListSort(secondHalf)
-	output = append(output, convertTimeToString(layout, quickSortFirstHalf)...)
-	output = append(output, convertTimeToString(layout, quickSortSecondHalf)...)
 	return output
 }

@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 )
 
 type Quandlv3 struct {
@@ -72,30 +71,29 @@ func (q Quandlv3) Data() map[string]map[string]float64 {
 	return output
 }
 
-// SortedKeys implements QuickSort to order the map keys (strings that match time.Time parsing) into a list for time series work
-func (q Quandlv3) SortedKeys(data map[string]map[string]float64) []string {
-	layout := "2006-01-02"
-	dateList := []time.Time{}
-	for key := range data {
-		newVal, _ := time.Parse(layout, key)
-		dateList = append(dateList, newVal)
-	}
+// // SortedKeys implements QuickSort to order the map keys (strings that match time.Time parsing) into a list for time series work
+// func (q Quandlv3) SortedKeys(layout string, data map[string]map[string]float64) []string {
+// 	dateList := []time.Time{}
+// 	for key := range data {
+// 		newVal, _ := time.Parse(layout, key)
+// 		dateList = append(dateList, newVal)
+// 	}
 
-	firstHalf := []time.Time{}
-	secondHalf := []time.Time{}
-	initialVal := dateList[0]
-	for _, val := range dateList {
-		if val.Before(initialVal) {
-			firstHalf = append(firstHalf, val)
-		} else {
-			secondHalf = append(secondHalf, val)
-		}
-	}
-	output := []string{}
-	quickSortFirstHalf := dateListSort(firstHalf)
-	quickSortSecondHalf := dateListSort(secondHalf)
-	output = append(output, convertTimeToString(layout, quickSortFirstHalf)...)
-	output = append(output, convertTimeToString(layout, quickSortSecondHalf)...)
-	return output
+// 	firstHalf := []time.Time{}
+// 	secondHalf := []time.Time{}
+// 	initialVal := dateList[0]
+// 	for _, val := range dateList {
+// 		if val.Before(initialVal) {
+// 			firstHalf = append(firstHalf, val)
+// 		} else {
+// 			secondHalf = append(secondHalf, val)
+// 		}
+// 	}
+// 	output := []string{}
+// 	quickSortFirstHalf := dateListSort(firstHalf)
+// 	quickSortSecondHalf := dateListSort(secondHalf)
+// 	output = append(output, convertTimeToString(layout, quickSortFirstHalf)...)
+// 	output = append(output, convertTimeToString(layout, quickSortSecondHalf)...)
+// 	return output
 
-}
+// }

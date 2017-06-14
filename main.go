@@ -24,12 +24,14 @@ func main() {
 		Source:    source,
 		StartDate: startDate,
 	}
-	data := quandlData.Data()
+	// data := quandlData.Data()
 	// fmt.Println(data)
 	// rawData := quandlData.RawData()
 	// fmt.Println(rawData)
-	sortedKeys := quandlData.SortedKeys(data)
-	fmt.Println(sortedKeys)
+	quandlLayout := "2006-01-02"
+	// sortedKeys := quandlData.SortedKeys(quandlLayout, data)
+	// fmt.Println(sortedKeys)
+	fmt.Println(get_cocoa.SortedKeys(quandlData, quandlLayout))
 
 	googleData := get_cocoa.GoogleFinance{
 		Ticker:    "CHOC",
@@ -38,7 +40,8 @@ func main() {
 	}
 	// fmt.Println(googleData.RawData())
 	// gfData := googleData.Data()
-	// sortedGFKeys := googleData.SortedKeys(gfData)
+	// googleLayout := "2-Jan-06"
+	// sortedGFKeys := googleData.SortedKeys(googleLayout, gfData)
 
 	// chocPlot := plotter.XYs{}
 	// for key, value := range sortedGFKeys {
